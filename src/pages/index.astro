@@ -4,15 +4,65 @@ import Section from '../components/Section.astro';
 
 const title = 'Australia\'s Trusted Car Transport Specialists';
 const description = 'Safe, reliable, and affordable car transport services across Australia. Get a free quote today!';
+
+// Preload critical resources
+const preloadImages = [
+  '/images/hero-placeholder.svg',
+  // Add other critical images here
+];
+
+// Critical CSS for hero section
+const heroCriticalCSS = `
+  .hero-content {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
 ---
 
+<!-- Preload critical resources and add preconnect hints -->
+<link rel="preconnect" href="https://vehicles.movingagain.com.au" />
+<link rel="dns-prefetch" href="https://vehicles.movingagain.com.au" />
+{preloadImages.map((src) => (
+  <link 
+    rel="preload" 
+    as="image" 
+    href={src} 
+    fetchpriority="high"
+    imagesrcset={`${src} 1x, ${src.replace('.svg', '@2x.svg')} 2x`}
+  />
+))}
+
+<style is:inline>{heroCriticalCSS}</style>
+
 <MainLayout {title} {description}>
-  <!-- Hero Section -->
+  <!-- Hero Section with optimized SVG background -->
   <Section name="Hero" class="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20 md:py-32 overflow-hidden">
-    <div class="absolute inset-0 bg-[url('/images/hero-placeholder.svg')] bg-cover bg-center opacity-20"></div>
+    <div class="absolute inset-0">
+      <img 
+        src="/images/hero-placeholder.svg" 
+        alt="" 
+        class="w-full h-full object-cover"
+        fetchpriority="high"
+        decoding="async"
+        loading="eager"
+        width="1920"
+        height="1080"
+        style="object-position: center center;"
+      />
+    </div>
     <div class="container mx-auto px-4 relative z-10">
-      <div class="max-w-3xl mx-auto text-center">
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+      <div class="max-w-3xl mx-auto text-center hero-content">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight" 
+            style="will-change: transform, opacity;"
+            fetchpriority="high">
           Professional Car Transport Services Across Australia
         </h1>
         <p class="text-xl md:text-2xl mb-8 text-blue-100 max-w-2xl mx-auto">
