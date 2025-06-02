@@ -11,8 +11,24 @@ export const getStaticPaths = () => {
   return []; // Disable dynamic route generation for this page
 };
 
-// Define critical styles as a minified string to reduce HTML size
-const criticalStyles = `.test-route{color:#1f2937;max-width:65ch;margin:0 auto;line-height:1.625}.test-route h1{font-size:2.25rem;font-weight:700;color:#111827;margin:0 0 1.5rem;line-height:1.2}.test-route h2{font-size:1.5rem;font-weight:700;color:#111827;margin:2rem 0 1rem;line-height:1.3}.test-route h3{font-size:1.25rem;font-weight:600;margin:1.5rem 0 .75rem}.test-route p{margin:1rem 0;line-height:1.7}.test-route a{color:#2563eb;text-decoration:none}.test-route a:hover{text-decoration:underline}.test-route .alert{padding:1rem;margin:0 0 1.5rem;border-radius:.375rem;font-size:.9375rem}.test-route .alert-error{background-color:#fef2f2;border:1px solid #fecaca;color:#b91c1c}.test-route .content{margin:1.5rem 0}.test-route .content p{margin:1.25rem 0}.test-route .content ul,.test-route .content ol{margin:1rem 0 1rem 1.25rem;padding:0}.test-route .content li{margin:.5rem 0}.test-route .content img{max-width:100%;height:auto;margin:1.5rem 0;border-radius:.375rem}`;
+// Define critical styles as a template literal to avoid parsing issues
+const criticalStyles = `
+  .test-route{color:#1f2937;max-width:65ch;margin:0 auto;line-height:1.625}
+  .test-route h1{font-size:2.25rem;font-weight:700;color:#111827;margin:0 0 1.5rem;line-height:1.2}
+  .test-route h2{font-size:1.5rem;font-weight:700;color:#111827;margin:2rem 0 1rem;line-height:1.3}
+  .test-route h3{font-size:1.25rem;font-weight:600;margin:1.5rem 0 .75rem}
+  .test-route p{margin:1rem 0;line-height:1.7}
+  .test-route a{color:#2563eb;text-decoration:none}
+  .test-route a:hover{text-decoration:underline}
+  .test-route .alert{padding:1rem;margin:0 0 1.5rem;border-radius:.375rem;font-size:.9375rem}
+  .test-route .alert-error{background-color:#fef2f2;border:1px solid #fecaca;color:#b91c1c}
+  .test-route .content{margin:1.5rem 0}
+  .test-route .content p{margin:1.25rem 0}
+  .test-route .content ul,
+  .test-route .content ol{margin:1rem 0 1rem 1.25rem;padding:0}
+  .test-route .content li{margin:.5rem 0}
+  .test-route .content img{max-width:100%;height:auto;margin:1.5rem 0;border-radius:.375rem}
+`;
 
 // Get the current route
 const routeParam = 'adelaide-to-sydney';
@@ -40,8 +56,10 @@ try {
 
 <BaseLayout title="Test Route" description="Test route for debugging">
   <div class="container mx-auto px-4 py-8 test-route">
-    <!-- Inline critical CSS with low specificity to prevent FOUC -->
-    <style>{criticalStyles}</style>
+    <!-- Critical CSS inlined with is:inline to prevent build issues -->
+    <style is:inline>
+      {criticalStyles}
+    </style>
     <h1>Test Route</h1>
     
     {error ? (
