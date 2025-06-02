@@ -1,0 +1,262 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import Section from '../components/Section.astro';
+import fs from 'fs/promises';
+import path from 'path';
+import logger from '../utils/logger';
+
+// Define content directory path
+const contentDir = path.join(process.cwd(), 'src/content/routes');
+
+// This enables static site generation
+export const prerender = true;
+
+// Generate static paths for all routes
+export async function getStaticPaths() {
+  await logger.log('Generating static paths...');
+  try {
+    // Check if content directory exists
+    try {
+      await fs.access(contentDir);
+      await logger.log('Content directory exists:', contentDir);
+    } catch (dirErr) {
+      await logger.error(`Content directory does not exist: ${contentDir}`, dirErr);
+      throw new Error(`Content directory does not exist: ${contentDir}`);
+    }
+    
+    // Read directory contents
+    let files;
+    try {
+      files = await fs.readdir(contentDir);
+      await logger.log('Found files in content directory:', files);
+    } catch (readErr) {
+      await logger.error(`Error reading content directory: ${contentDir}`, readErr);
+      throw new Error(`Error reading content directory: ${readErr.message}`);
+    }
+    
+    if (!files || files.length === 0) {
+      await logger.error('No files found in content directory');
+      throw new Error('No files found in content directory');
+    }
+    
+    // Filter JSON files
+    const jsonFiles = files.filter(file => file.endsWith('.json'));
+    await logger.log('JSON files found:', jsonFiles);
+    
+    if (jsonFiles.length === 0) {
+      await logger.error('No JSON files found in content directory');
+      throw new Error('No JSON files found in content directory');
+    }
+    
+    // Generate paths for each JSON file
+    const paths = [];
+    
+    for (const file of jsonFiles) {
+      try {
+        // Remove .json extension
+        const route = file.replace(/\.json$/, '');
+        await logger.log(`Processing file: ${file}, route: ${route}`);
+        
+        // For the root route, use empty array
+        if (route === 'index') {
+          paths.push({
+            params: { route: undefined },
+            props: { 
+              fileName: 'index.json',
+              isRoot: true
+            }
+          });
+        } else {
+          // For other routes, use the route as the parameter
+          paths.push({
+            params: { route },
+            props: { 
+              fileName: file,
+              isRoot: false
+            }
+          });
+        }
+      } catch (fileErr) {
+        await logger.error(`Error processing file ${file}:`, fileErr);
+        // Continue with next file even if one fails
+        continue;
+      }
+    }
+
+    if (paths.length === 0) {
+      await logger.error('No valid paths generated from JSON files');
+      throw new Error('No valid paths generated from JSON files');
+    }
+
+    await logger.log(`Successfully generated ${paths.length} paths`);
+    return paths;
+  } catch (error) {
+    await logger.error('Error in getStaticPaths:', {
+      message: error.message,
+      stack: error.stack,
+      code: error.code,
+      path: error.path,
+      errno: error.errno,
+      syscall: error.syscall
+    });
+    
+    // Return a default path to prevent build failures
+    return [{
+      params: { route: 'adelaide-to-sydney' },
+      props: {
+        fileName: 'adelaide-to-sydney.json',
+        isRoot: false
+      }
+    }];
+  }
+}
+
+// Get the current route content
+const { route: routeParam } = Astro.params || {};
+const { fileName = 'index.json', isRoot = false } = Astro.props || {};
+
+await logger.log('--- Route Rendering ---');
+await logger.log('Route params:', Astro.params);
+await logger.log('Props:', Astro.props);
+await logger.log('Route param:', routeParam);
+await logger.log('File name:', fileName);
+await logger.log('Is root:', isRoot);
+
+let content = null;
+let error = null;
+let filePath = '';
+
+try {
+  // Construct the file path
+  filePath = path.join(contentDir, fileName);
+  await logger.log('Attempting to load content from:', filePath);
+  
+  // Check if file exists
+  try {
+    await fs.access(filePath);
+    await logger.log('File exists, reading content...');
+  } catch (accessErr) {
+    throw new Error(`File not found at path: ${filePath}`);
+  }
+  
+  // Read and parse the JSON file
+  const fileContent = await fs.readFile(filePath, 'utf-8');
+  content = JSON.parse(fileContent);
+  
+  await logger.log('Successfully loaded content for route:', routeParam || 'index');
+  await logger.log('Content keys:', Object.keys(content));
+} catch (err) {
+  error = `Error loading content: ${err.message}`;
+  await logger.error(error);
+  await logger.error('Error details:', { 
+    message: err.message, 
+    stack: err.stack,
+    code: err.code,
+    path: err.path
+  });
+}
+
+// Process the title to get only the part before the first divider
+let cleanTitle = '';
+if (content?.title) {
+  cleanTitle = content.title.split('|')[0].trim();
+}
+
+// Debug info
+const debugInfo = {
+  routeParam,
+  fileName,
+  filePath,
+  contentExists: !!content,
+  contentKeys: content ? Object.keys(content) : [],
+  cleanTitle,
+  error: error || null
+};
+
+console.log('Debug info:', JSON.stringify(debugInfo, null, 2));
+---
+
+<MainLayout title={cleanTitle || 'Page Not Found'} description={content?.description || ''}>
+  <!-- Hero Section -->
+  {content && (
+    <Section name="Hero" class="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16 md:py-24 overflow-hidden">
+      <div class="absolute inset-0 bg-[url('/images/hero-placeholder.svg')] bg-cover bg-center opacity-20"></div>
+      <div class="container mx-auto px-4 relative z-10">
+        <div class="max-w-4xl mx-auto text-center">
+          <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 leading-tight">
+            {cleanTitle}
+          </h1>
+          <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a 
+              href="https://vehicles.movingagain.com.au/quote/multi-step?mtm_campaign=Standard_Vehicle_Quote&mtm_kwd=MACT" 
+              class="bg-white text-blue-700 hover:bg-blue-50 px-8 py-4 rounded-md font-bold text-lg transition-colors text-center"
+            >
+              Get a Free Quote
+            </a>
+          </div>
+        </div>
+      </div>
+    </Section>
+  )}
+  
+  <main class="container mx-auto px-4 py-8">
+  {content ? (
+    <>
+      <div class="prose max-w-none">
+        <div set:html={content.content} />
+      </div>
+      
+      <!-- CTA Section -->
+      <Section name="Call to Action" class="py-16 bg-blue-700 text-white mt-12 rounded-lg">
+        <div class="container mx-auto px-4 text-center">
+          <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Transport Your Vehicle?</h2>
+          <p class="text-xl mb-8 max-w-2xl mx-auto text-blue-100">
+            Get a free, no-obligation quote today and experience the Moving Again difference.
+          </p>
+          <div class="flex flex-col sm:flex-row justify-center gap-4 max-w-3xl mx-auto">
+            <a 
+              href="https://vehicles.movingagain.com.au/quote/multi-step?mtm_campaign=Standard_Vehicle_Quote&mtm_kwd=MACT" 
+              class="bg-white text-blue-700 hover:bg-blue-50 px-6 py-4 rounded-md font-bold text-lg transition-colors text-center flex-1"
+            >
+              Standard Car Transport Quote
+            </a>
+            <a 
+              href="https://vehicles.movingagain.com.au/quote-types?mtm_campaign=Non_Standard_Vehicle_Quote&mtm_kwd=MACT" 
+              class="bg-transparent border-2 border-white text-white hover:bg-white/10 px-6 py-4 rounded-md font-bold text-lg transition-colors text-center flex-1"
+            >
+              Non-Standard Vehicle Quote
+            </a>
+          </div>
+        </div>
+      </Section>
+    </>
+  ) : (
+    <div class="text-center py-12">
+      <h1 class="text-4xl font-bold mb-4">Page Not Found</h1>
+      <p class="text-xl text-gray-600 mb-4">
+        The requested page could not be found.
+      </p>
+      {error && (
+        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 max-w-2xl mx-auto text-left">
+          <p class="font-bold">Error:</p>
+          <p>{error}</p>
+          {filePath && <p class="mt-2 text-sm">File: {filePath}</p>}
+        </div>
+      )}
+      <a href="/" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition-colors">
+        Return to Homepage
+      </a>
+    </div>
+  )}
+  
+  <!-- Debug info for development -->
+  {import.meta.env.DEV && (
+    <div class="mt-12 p-4 bg-gray-100 rounded-lg">
+      <h2 class="text-xl font-bold mb-4">Debug Info</h2>
+      <pre class="text-xs overflow-auto p-4 bg-white rounded">
+{JSON.stringify(debugInfo, null, 2)}
+      </pre>
+    </div>
+  )}
+  </main>
+</MainLayout>

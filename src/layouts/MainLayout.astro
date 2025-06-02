@@ -1,5 +1,5 @@
 ---
-// src/layouts/Layout.astro
+// src/layouts/MainLayout.astro
 interface Props {
   title: string;
   description?: string;
@@ -15,7 +15,7 @@ const { title, description = 'Professional car transport services across Austral
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <title>{title} | Moving Again Car Transport</title>
+    <title>{title}</title>
     
     <!-- Canonical URL -->
     <link rel="canonical" href={new URL(Astro.url.pathname, 'https://cartransport.movingagain.com.au').toString()} />
@@ -48,23 +48,16 @@ const { title, description = 'Professional car transport services across Austral
     <!-- Preload critical assets -->
     <link rel="preload" href="/images/logo.png" as="image" />
     
-    <!-- Preconnect to external domains -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
     
-    <!-- Preload critical fonts -->
-    <link 
-      href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" 
-      rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link 
-        href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" 
-        rel="stylesheet"
-      />
-    </noscript>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="/styles/global.css" />
     
     <!-- Schema.org structured data -->
     <script type="application/ld+json">
@@ -116,29 +109,14 @@ const { title, description = 'Professional car transport services across Austral
     }
     </script>
     
-    <!-- Global CSS -->
-    <link rel="stylesheet" href="/styles/global.css" />
-    
-    <!-- Preload critical CSS -->
+    <!-- Critical CSS -->
     <style>
       /* Critical CSS can be inlined here */
       .logo { height: 4rem; }
       .nav-link { position: relative; }
       .nav-link:hover { opacity: 0.8; }
       .nav-link.active { font-weight: 700; }
-    </style>
-  </head>
-
-  <body class="min-h-screen flex flex-col font-['Arvo',serif] text-gray-800 bg-gray-100">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    
-    <style>
+      
       /* Custom styles to match original site */
       .entry-content {
         line-height: 1.8;
@@ -205,31 +183,33 @@ const { title, description = 'Professional car transport services across Austral
         .entry-content {
           padding: 0 1rem;
         }
+      }
+    </style>
   </head>
 
   <body class="min-h-screen flex flex-col font-['Arvo',serif] text-gray-800 bg-gray-100">
     <!-- Header -->
-    <header class="bg-white shadow-md">
+    <header class="bg-[#101827] text-white shadow-md">
       <div class="container mx-auto px-4">
-        <div class="flex justify-between items-center py-4">
+        <div class="flex justify-between items-center py-6">
           <!-- Logo -->
-          <a href="/" class="flex items-center space-x-2">
-            <img src="/images/logo.png" alt="Moving Again" class="h-12 w-auto" width="48" height="48" />
+          <a href="/" class="flex items-center space-x-3">
+            <img src="/images/logo.png" alt="Moving Again" class="h-16 w-auto" width="64" height="64" />
             <div>
-              <div class="text-lg font-bold text-primary">Moving Again</div>
-              <div class="text-sm text-gray-600">Car Transport</div>
+              <div class="text-xl font-bold text-white">Moving Again</div>
+              <div class="text-base text-blue-200">Car Transport</div>
             </div>
           </a>
           
           <!-- Desktop Navigation -->
-          <nav class="hidden md:flex space-x-6 items-center">
-            <a href="/" class="nav-link text-gray-700 hover:text-primary transition-colors">Home</a>
-            <a href="https://movingagain.com.au/contact-moving-again/" class="nav-link text-gray-700 hover:text-primary transition-colors">Contact Us</a>
-            <a href="/get-quote" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark transition-colors">Get a Quote</a>
+          <nav class="hidden md:flex space-x-8 items-center">
+            <a href="/" class="nav-link text-white hover:text-blue-200 transition-colors text-lg">Home</a>
+            <a href="https://movingagain.com.au/contact-moving-again/" class="nav-link text-white hover:text-blue-200 transition-colors text-lg">Contact Us</a>
+            <a href="https://vehicles.movingagain.com.au/quote/multi-step?mtm_campaign=Standard_Vehicle_Quote&mtm_kwd=MACT" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md transition-colors text-lg font-medium shadow-lg hover:shadow-xl">Get a Quote</a>
           </nav>
           
           <!-- Mobile menu button -->
-          <button id="mobile-menu-button" class="md:hidden flex items-center">
+          <button id="mobile-menu-button" class="md:hidden flex items-center text-white">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
             </svg>
@@ -238,11 +218,11 @@ const { title, description = 'Professional car transport services across Austral
       </div>
       
       <!-- Mobile Navigation -->
-      <div id="mobile-menu" class="md:hidden bg-white shadow-lg absolute w-full z-10 hidden">
+      <div id="mobile-menu" class="md:hidden bg-[#101827] text-white shadow-lg absolute w-full z-10 hidden">
         <div class="px-4 py-2 space-y-1">
-            <a href="/" class="block py-2 hover:bg-white/10 px-2 rounded">Home</a>
-            <a href="https://movingagain.com.au/contact-moving-again/" class="block py-2 hover:bg-white/10 px-2 rounded">Contact Us</a>
-            <a href="/get-quote" class="block bg-primary text-white text-center py-2 rounded-md font-bold mt-2">Get a Quote</a>
+            <a href="/" class="block py-2 hover:bg-gray-700 px-2 rounded">Home</a>
+            <a href="https://movingagain.com.au/contact-moving-again/" class="block py-2 hover:bg-gray-700 px-2 rounded">Contact Us</a>
+            <a href="https://vehicles.movingagain.com.au/quote/multi-step?mtm_campaign=Standard_Vehicle_Quote&mtm_kwd=MACT" class="block bg-blue-600 hover:bg-blue-700 text-white text-center py-3 rounded-md font-bold mt-2 shadow-lg hover:shadow-xl">Get a Quote</a>
         </div>
       </div>
     </header>
@@ -255,111 +235,6 @@ const { title, description = 'Professional car transport services across Austral
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-12">
       <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div class="md:col-span-2">
-            <div class="flex items-center space-x-2 mb-4">
-              <img src="/images/logo-white.png" alt="Moving Again Car Transport" class="h-12" />
-              <div>
-                <div class="text-xl font-bold">Moving Again</div>
-                <div class="text-sm">Car Transport</div>
-              </div>
-            </div>
-            <p class="text-gray-400">
-              Professional car transport services across Australia. Safe, reliable, and affordable vehicle transportation.
-            </p>
-          </div>
-          
-          <div>
-            <h3 class="text-lg font-bold mb-4">Quick Links</h3>
-            <ul class="space-y-2">
-              <li><a href="/" class="text-gray-400 hover:text-white">Home</a></li>
-              <li><a href="/services" class="text-gray-400 hover:text-white">Services</a></li>
-              <li><a href="/pricing" class="text-gray-400 hover:text-white">Pricing</a></li>
-              <li><a href="/about" class="text-gray-400 hover:text-white">About Us</a></li>
-              <li><a href="/contact" class="text-gray-400 hover:text-white">Contact</a></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 class="text-lg font-bold mb-4">Contact Us</h3>
-            <address class="not-italic text-gray-400 space-y-2">
-              <div class="flex items-start space-x-2">
-                <i class="fas fa-map-marker-alt mt-1"></i>
-                <span>3/31 Expansion Street, Molendinar QLD 4214</span>
-              </div>
-              <div class="flex items-center space-x-2">
-                <i class="fas fa-phone"></i>
-                <a href="tel:+610721432557" class="hover:text-white">07 2143 2557</a>
-              </div>
-              <div class="flex items-center space-x-2">
-                <i class="fas fa-envelope"></i>
-                <a href="mailto:info@movingagain.com.au" class="hover:text-white">info@movingagain.com.au</a>
-              </div>
-            </address>
-          </div>
-        </div>
-        
-        <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
-          <p>&copy; {new Date().getFullYear()} Moving Again Car Transport. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-    
-    <!-- Mobile menu script -->
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        mobileMenuButton.addEventListener('click', () => {
-          mobileMenu.classList.toggle('hidden');
-        });
-      });
-    </script>
-    <header class="bg-primary text-white sticky top-0 z-50 shadow-md">
-      <div class="container mx-auto px-4 py-3">
-        <div class="flex justify-between items-center">
-          <!-- Logo -->
-          <a href="/" class="flex items-center space-x-2">
-            <img 
-              src="/images/logo.png" 
-              alt="Moving Again Car Transport" 
-              class="h-16 w-auto"
-              width="64"
-              height="64"
-              loading="eager"
-            />
-            <span class="text-xl font-bold font-serif">Moving Again</span>
-          </a>
-          
-          <!-- Desktop Navigation -->
-          <nav class="hidden md:flex space-x-6 items-center">
-            <a href="/" class="nav-link hover:text-white/90 transition-colors">Home</a>
-            <a href="https://movingagain.com.au/contact-moving-again/" class="nav-link hover:text-white/90 transition-colors">Contact Us</a>
-            <a 
-              href="/get-quote" 
-              class="bg-white text-primary px-4 py-2 rounded-md font-bold hover:bg-gray-100 transition-colors"
-            >
-              Get a Quote
-            </a>
-          </nav>
-          
-          <!-- Mobile menu button -->
-          <button id="mobile-menu-button" class="md:hidden text-white p-2">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-        </div>
-        
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="md:hidden hidden py-4">
-          <div class="flex flex-col space-y-3">
-            <a href="/" class="block py-2 hover:bg-white/10 px-2 rounded">Home</a>
-            <a href="https://movingagain.com.au/contact-moving-again/" class="block py-2 hover:bg-white/10 px-2 rounded">Contact Us</a>
-            <a href="/get-quote" class="block bg-white text-primary text-center py-2 rounded-md font-bold mt-2">
-              Get a Quote
-            </a>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div class="md:col-span-2">
             <div class="flex items-center space-x-2 mb-4">
@@ -382,13 +257,14 @@ const { title, description = 'Professional car transport services across Austral
           </div>
           
           <div>
-            <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+            <h3 class="text-lg font-bold mb-4">Quote Types</h3>
             <ul class="space-y-2">
-              <li><a href="/" class="text-gray-300 hover:text-white transition-colors">Home</a></li>
-              <li><a href="https://movingagain.com.au/contact-moving-again/" class="text-gray-300 hover:text-white transition-colors">Contact Us</a></li>
+              <li><a href="https://vehicles.movingagain.com.au/quote/multi-step?mtm_campaign=Standard_Vehicle_Quote&mtm_kwd=MACT" class="text-gray-300 hover:text-white transition-colors">Standard Car Transport</a></li>
+              <li><a href="https://vehicles.movingagain.com.au/quote-types?mtm_campaign=Non_Standard_Vehicle_Quote&mtm_kwd=MACT" class="text-gray-300 hover:text-white transition-colors">Non-Standard Vehicle</a></li>
             </ul>
           </div>
           
+
           <div>
             <h3 class="text-lg font-bold mb-4">Contact Us</h3>
             <address class="not-italic text-gray-300 space-y-2">
@@ -397,10 +273,9 @@ const { title, description = 'Professional car transport services across Austral
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                3 / 31 Expansion Street<br>
-                Molendinar<br>
-                Gold Coast<br>
-                Queensland 4216
+                3/31 Expansion Street<br>
+                Molendinar QLD<br>
+                4214
               </p>
               <p class="flex items-center">
                 <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -427,13 +302,30 @@ const { title, description = 'Professional car transport services across Austral
         
         if (mobileMenuButton && mobileMenu) {
           mobileMenuButton.addEventListener('click', () => {
+            // Toggle the menu visibility
             mobileMenu.classList.toggle('hidden');
+            
+            // Update ARIA attributes
+            const expanded = mobileMenu.classList.contains('hidden') ? 'false' : 'true';
+            mobileMenuButton.setAttribute('aria-expanded', expanded);
+            
+            // Toggle between hamburger and close icon
+            const menuIcon = mobileMenuButton.querySelector('svg path');
+            if (menuIcon) {
+              if (expanded === 'true') {
+                menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+              } else {
+                menuIcon.setAttribute('d', 'M4 6h16M4 12h16m-7 6h7');
+              }
+            }
           });
         }
         
         // Close mobile menu when clicking outside
         document.addEventListener('click', (e) => {
-          if (!mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+          if (mobileMenuButton && mobileMenu && 
+              !mobileMenuButton.contains(e.target) && 
+              !mobileMenu.contains(e.target)) {
             mobileMenu.classList.add('hidden');
           }
         });

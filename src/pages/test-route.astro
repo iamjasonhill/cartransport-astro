@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import fs from 'fs/promises';
+import path from 'path';
+
+// This enables static site generation
+export const prerender = true;
+
+// Get the current route
+const routeParam = 'adelaide-to-sydney';
+const fileName = 'adelaide-to-sydney.json';
+const contentDir = path.join(process.cwd(), 'src/content/routes');
+
+let content = null;
+let error = null;
+
+try {
+  // Construct the file path
+  const filePath = path.join(contentDir, fileName);
+  console.log('Test route - Loading content from:', filePath);
+  
+  // Read and parse the JSON file
+  const fileContent = await fs.readFile(filePath, 'utf-8');
+  content = JSON.parse(fileContent);
+  
+  console.log('Test route - Successfully loaded content for route:', routeParam);
+} catch (err) {
+  console.error('Test route - Error loading content:', err);
+  error = err.message;
+}
+---
+
+<BaseLayout title="Test Route" description="Test route for debugging">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Test Route</h1>
+    
+    {error ? (
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
+        <strong class="font-bold">Error loading content:</strong>
+        <span class="block sm:inline"> {error}</span>
+      </div>
+    ) : null}
+    
+    {content ? (
+      <div>
+        <h2 class="text-2xl font-bold mb-4">Content for: {content.title}</h2>
+        <div class="prose max-w-none">
+          <div set:html={content.content} />
+        </div>
+      </div>
+    ) : (
+      <p>No content loaded.</p>
+    )}
+    
+    <div class="mt-8 p-4 bg-gray-100 rounded">
+      <h3 class="font-bold mb-2">Debug Info:</h3>
+      <pre class="text-xs overflow-auto p-4 bg-white rounded">
+{JSON.stringify({
+  routeParam,
+  fileName,
+  contentDir,
+  fileExists: content ? true : false,
+  error: error || 'No error'
+}, null, 2)}
+      </pre>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/Layout.astro';
+import fs from 'fs/promises';
+import path from 'path';
+
+// Enable static site generation
+export const prerender = true;
+
+// Get all available routes
+export async function getStaticPaths() {
+  try {
+    // Read all JSON files in the routes directory
+    const files = await fs.readdir(path.join(process.cwd(), 'src/content/routes'));
+    
+    // Create paths for each route
+    const paths = files
+      .filter(file => file.endsWith('.json'))
+      .map(file => ({
+        params: { 
+          route: file.replace(/\.json$/, '').split('/') 
+        }
+      }));
+
+    // Add the root path
+    paths.push({ params: { route: [] } });
+
+    return paths;
+  } catch (error) {
+    console.error('Error in getStaticPaths:', error);
+    return [];
+  }
+}
+
+// Get the route parameter
+const { route } = Astro.params;
+const routePath = route ? route.join('/') : 'index';
+
+// Try to load the route content
+let content = null;
+try {
+  const filePath = path.join(process.cwd(), 'src/content/routes', `${routePath}.json`);
+  const fileContent = await fs.readFile(filePath, 'utf-8');
+  content = JSON.parse(fileContent);
+} catch (error) {
+  console.error(`Error loading route ${routePath}:`, error);
+  return Astro.redirect('/404');
+}
+
+const { title, description, content: html } = content;
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="max-w-4xl mx-auto px-4 py-8 dark:bg-gray-900 dark:text-gray-100">
+    <article class="prose dark:prose-invert max-w-none" set:html={html} />
+  </div>
+</BaseLayout>

@@ -1,12 +1,12 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import MainLayout from '../layouts/MainLayout.astro';
 import Section from '../components/Section.astro';
 
 const title = 'Australia\'s Trusted Car Transport Specialists';
 const description = 'Safe, reliable, and affordable car transport services across Australia. Get a free quote today!';
 ---
 
-<Layout {title} {description}>
+<MainLayout {title} {description}>
   <!-- Hero Section -->
   <Section name="Hero" class="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20 md:py-32 overflow-hidden">
     <div class="absolute inset-0 bg-[url('/images/hero-placeholder.svg')] bg-cover bg-center opacity-20"></div>
@@ -242,4 +242,4 @@ const description = 'Safe, reliable, and affordable car transport services acros
       </div>
     </div>
   </Section>
-</Layout>
+</MainLayout>

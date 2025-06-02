@@ -1,0 +1,16 @@
+---
+// src/layouts/BaseLayout.astro
+import MainLayout from './MainLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  children?: any;
+}
+
+const { title, description = 'Professional car transport services across Australia', children } = Astro.props;
+---
+
+<MainLayout title={title} description={description}>
+  <slot />
+</MainLayout>
