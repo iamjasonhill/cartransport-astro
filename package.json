@@ -8,12 +8,16 @@
     "preview": "astro preview",
     "astro": "astro",
     "migrate": "node scripts/migrate-pages.js",
-    "test-route": "node scripts/test-route.js"
+    "test-route": "node scripts/test-route.js",
+    "enhance-content": "node scripts/enhance-content.js",
+    "enhance": "node scripts/enhance-content-api.js"
   },
   "dependencies": {
     "astro": "^5.8.1",
+    "chalk": "^5.4.1",
     "cheerio": "^1.0.0",
-    "jsdom": "^24.1.3"
+    "jsdom": "^24.1.3",
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^6.0.2"

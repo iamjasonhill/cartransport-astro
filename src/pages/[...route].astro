@@ -4,6 +4,7 @@ import Section from '../components/Section.astro';
 import fs from 'fs/promises';
 import path from 'path';
 import logger from '../utils/logger';
+import '../styles/routes.css';
 
 // Define content directory path
 const contentDir = path.join(process.cwd(), 'src/content/routes');
@@ -176,87 +177,77 @@ const debugInfo = {
 console.log('Debug info:', JSON.stringify(debugInfo, null, 2));
 ---
 
-<MainLayout title={cleanTitle || 'Page Not Found'} description={content?.description || ''}>
+<MainLayout title={content?.title || 'Car Transport'} description={content?.description || ''}>
   <!-- Hero Section -->
-  {content && (
-    <Section name="Hero" class="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16 md:py-24 overflow-hidden">
-      <div class="absolute inset-0 bg-[url('/images/hero-placeholder.svg')] bg-cover bg-center opacity-20"></div>
-      <div class="container mx-auto px-4 relative z-10">
-        <div class="max-w-4xl mx-auto text-center">
-          <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 leading-tight">
-            {cleanTitle}
-          </h1>
-          <div class="flex flex-col sm:flex-row justify-center gap-4">
-            <a 
-              href="https://vehicles.movingagain.com.au/quote/multi-step?mtm_campaign=Standard_Vehicle_Quote&mtm_kwd=MACT" 
-              class="bg-white text-blue-700 hover:bg-blue-50 px-8 py-4 rounded-md font-bold text-lg transition-colors text-center"
-            >
-              Get a Free Quote
-            </a>
-          </div>
+  <Section name="Hero" class="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16 md:py-24 overflow-hidden">
+    <div class="absolute inset-0 bg-[url('/images/hero-placeholder.svg')] bg-cover bg-center opacity-20"></div>
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+          {cleanTitle || 'Professional Car Transport Services'}
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
+          Safe, reliable, and affordable vehicle transportation with door-to-door service.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a 
+            href="https://vehicles.movingagain.com.au/quote/multi-step?mtm_campaign=Standard_Vehicle_Quote&mtm_kwd=MACT" 
+            class="bg-white text-blue-700 hover:bg-blue-50 px-8 py-4 rounded-md font-bold text-lg transition-colors text-center"
+          >
+            Standard Car Transport Quote
+          </a>
+          <a 
+            href="https://vehicles.movingagain.com.au/quote-types?mtm_campaign=Non_Standard_Vehicle_Quote&mtm_kwd=MACT" 
+            class="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-4 rounded-md font-bold text-lg transition-colors text-center"
+          >
+            Non-Standard Vehicle Quote
+          </a>
         </div>
       </div>
-    </Section>
-  )}
-  
-  <main class="container mx-auto px-4 py-8">
-  {content ? (
-    <>
-      <div class="prose max-w-none">
-        <div set:html={content.content} />
-      </div>
-      
-      <!-- CTA Section -->
-      <Section name="Call to Action" class="py-16 bg-blue-700 text-white mt-12 rounded-lg">
-        <div class="container mx-auto px-4 text-center">
-          <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Transport Your Vehicle?</h2>
-          <p class="text-xl mb-8 max-w-2xl mx-auto text-blue-100">
-            Get a free, no-obligation quote today and experience the Moving Again difference.
-          </p>
-          <div class="flex flex-col sm:flex-row justify-center gap-4 max-w-3xl mx-auto">
+    </div>
+  </Section>
+
+  <Section class="bg-white py-12">
+    <div class="route-container">
+      <article class="route-content">
+        {content?.content ? (
+          <Fragment set:html={content.content} />
+        ) : (
+          <div class="text-center py-12">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">Page Not Found</h1>
+            <p class="text-gray-600 mb-6">The page you're looking for doesn't exist or has been moved.</p>
             <a 
-              href="https://vehicles.movingagain.com.au/quote/multi-step?mtm_campaign=Standard_Vehicle_Quote&mtm_kwd=MACT" 
-              class="bg-white text-blue-700 hover:bg-blue-50 px-6 py-4 rounded-md font-bold text-lg transition-colors text-center flex-1"
+              href="/" 
+              class="btn btn-primary"
             >
-              Standard Car Transport Quote
-            </a>
-            <a 
-              href="https://vehicles.movingagain.com.au/quote-types?mtm_campaign=Non_Standard_Vehicle_Quote&mtm_kwd=MACT" 
-              class="bg-transparent border-2 border-white text-white hover:bg-white/10 px-6 py-4 rounded-md font-bold text-lg transition-colors text-center flex-1"
-            >
-              Non-Standard Vehicle Quote
+              Return to Home
             </a>
           </div>
-        </div>
-      </Section>
-    </>
-  ) : (
-    <div class="text-center py-12">
-      <h1 class="text-4xl font-bold mb-4">Page Not Found</h1>
-      <p class="text-xl text-gray-600 mb-4">
-        The requested page could not be found.
-      </p>
-      {error && (
-        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 max-w-2xl mx-auto text-left">
-          <p class="font-bold">Error:</p>
-          <p>{error}</p>
-          {filePath && <p class="mt-2 text-sm">File: {filePath}</p>}
-        </div>
-      )}
-      <a href="/" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition-colors">
-        Return to Homepage
-      </a>
+        )}
+        
+        {content?.content && (
+          <div class="route-cta">
+            <h3>Ready to Get Started?</h3>
+            <p>Get a free, no-obligation quote for your car transport needs today.</p>
+            <div class="cta-buttons flex flex-col sm:flex-row justify-center gap-4">
+              <a 
+                href="https://vehicles.movingagain.com.au/quote/multi-step?mtm_campaign=Standard_Vehicle_Quote&mtm_kwd=MACT" 
+                class="bg-white text-blue-700 hover:bg-blue-50 px-8 py-4 rounded-md font-bold text-lg transition-colors text-center"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Standard Car Transport Quote
+              </a>
+              <a 
+                href="https://vehicles.movingagain.com.au/quote-types?mtm_campaign=Non_Standard_Vehicle_Quote&mtm_kwd=MACT" 
+                class="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-4 rounded-md font-bold text-lg transition-colors text-center"
+              >
+                Non-Standard Vehicle Quote
+              </a>
+            </div>
+          </div>
+        )}
+      </article>
     </div>
-  )}
-  
-  <!-- Debug info for development -->
-  {import.meta.env.DEV && (
-    <div class="mt-12 p-4 bg-gray-100 rounded-lg">
-      <h2 class="text-xl font-bold mb-4">Debug Info</h2>
-      <pre class="text-xs overflow-auto p-4 bg-white rounded">
-{JSON.stringify(debugInfo, null, 2)}
-      </pre>
-    </div>
-  )}
-  </main>
+  </Section>
 </MainLayout>
