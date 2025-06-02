@@ -25,14 +25,66 @@ const preloadFonts = [
     <meta name="description" content={description} />
     <title>{title}</title>
     
-    <!-- Inline critical CSS -->
+    <!-- Inline critical CSS for above-the-fold content -->
     <style>
-      /* Critical CSS for above-the-fold content */
+      /*! Critical CSS for above-the-fold content */
       html { 
         scroll-behavior: smooth;
         -webkit-text-size-adjust: 100%;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+      }
+      
+      /* Critical layout styles */
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background-color: #f3f4f6;
+        color: #1f2937;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        line-height: 1.5;
+      }
+      
+      /* Critical header styles */
+      header {
+        background-color: #101827;
+        color: white;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+      
+      /* Critical container */
+      .container {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      
+      @media (min-width: 640px) {
+        .container {
+          max-width: 640px;
+        }
+      }
+      
+      @media (min-width: 768px) {
+        .container {
+          max-width: 768px;
+        }
+      }
+      
+      @media (min-width: 1024px) {
+        .container {
+          max-width: 1024px;
+        }
+      }
+      
+      @media (min-width: 1280px) {
+        .container {
+          max-width: 1280px;
+        }
       }
       
       /* Font face definitions with font-display: swap */
@@ -130,9 +182,23 @@ const preloadFonts = [
       as="style" 
       onload="this.onload=null;this.rel='stylesheet'"
     />
+    <link 
+      rel="preload" 
+      href="/styles/global.css" 
+      as="style" 
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <link 
+      rel="preload" 
+      href="/styles/routes/test-route.css" 
+      as="style" 
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
     <noscript>
       <link rel="stylesheet" href="/_astro/_route_.DK_t4Dnq.css" />
       <link rel="stylesheet" href="/_astro/_route_.DSsFr9II.css" />
+      <link rel="stylesheet" href="/styles/global.css" />
+      <link rel="stylesheet" href="/styles/routes/test-route.css" />
     </noscript>
     
     <!-- FontAwesome component will be loaded here -->
@@ -372,6 +438,38 @@ const preloadFonts = [
         }
       }
     </style>
+    <!-- Load non-critical CSS with low priority -->
+    <script>
+      /* Load non-critical CSS without blocking render */
+      function loadCSS(href, before, media) {
+        var ss = window.document.createElement('link');
+        var ref = before || window.document.getElementsByTagName('script')[0];
+        ss.rel = 'stylesheet';
+        ss.href = href;
+        ss.media = 'only x';
+        ref.parentNode.insertBefore(ss, ref);
+        setTimeout(function() {
+          ss.media = media || 'all';
+        });
+        return ss;
+      }
+      
+      // Load non-critical CSS after page load
+      if (window.requestIdleCallback) {
+        window.requestIdleCallback(function() {
+          ['/styles/global.css', '/styles/routes/test-route.css'].forEach(function(href) {
+            loadCSS(href);
+          });
+        });
+      } else {
+        // Fallback for browsers that don't support requestIdleCallback
+        window.addEventListener('load', function() {
+          ['/styles/global.css', '/styles/routes/test-route.css'].forEach(function(href) {
+            loadCSS(href);
+          });
+        });
+      }
+    </script>
   </head>
 
   <body class="min-h-screen flex flex-col font-['Arvo',serif] text-gray-800 bg-gray-100">
