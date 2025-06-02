@@ -11,6 +11,40 @@ export const getStaticPaths = () => {
   return []; // Disable dynamic route generation for this page
 };
 
+// Add critical styles for this route
+const criticalStyles = `
+  .test-route {
+    color: #1f2937;
+    max-width: 65ch;
+    margin: 0 auto;
+  }
+  .test-route h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 1.5rem;
+  }
+  .test-route h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 2rem 0 1rem;
+  }
+  .test-route p {
+    margin: 1rem 0;
+    line-height: 1.625;
+  }
+  .test-route .alert {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0.375rem;
+  }
+  .test-route .alert-error {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+  }`;
+
 // Get the current route
 const routeParam = 'adelaide-to-sydney';
 const fileName = 'adelaide-to-sydney.json';
@@ -36,21 +70,22 @@ try {
 ---
 
 <BaseLayout title="Test Route" description="Test route for debugging">
-  <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-6" style="color: #111827;">Test Route</h1>
+  <div class="container mx-auto px-4 py-8 test-route">
+    <style is:inline>{criticalStyles}</style>
+    <h1>Test Route</h1>
     
     {error ? (
-      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
-        <strong class="font-bold">Error loading content:</strong>
-        <span class="block sm:inline"> {error}</span>
+      <div class="alert alert-error" role="alert">
+        <strong>Error loading content:</strong>
+        <span> {error}</span>
       </div>
     ) : null}
     
     {content ? (
       <div>
-        <h2 class="text-2xl font-bold mb-4">Content for: {content.title}</h2>
-        <div class="prose max-w-none" style="color: #1f2937; max-width: 65ch;">
-          <div set:html={content.content} style="color: inherit;" />
+        <h2>Content for: {content.title}</h2>
+        <div class="content">
+          <div set:html={content.content} />
         </div>
       </div>
     ) : (

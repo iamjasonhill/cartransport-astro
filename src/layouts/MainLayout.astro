@@ -169,13 +169,6 @@ const preloadFonts = [
     <!-- Preload critical assets -->
     <link rel="preload" href="/images/logo.png" as="image" />
     
-    <!-- Preload non-critical CSS with loadCSS pattern -->
-    <link 
-      rel="preload" 
-      href="/styles/global.css" 
-      as="style" 
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
     <!-- Inline critical CSS for the current route -->
     <style is:inline>
       /* Inline critical CSS for current route */
@@ -193,8 +186,42 @@ const preloadFonts = [
         line-height: 1.625;
       }
     </style>
+    
+    <!-- Defer non-critical CSS loading -->
+    <script>
+      // Create a function to load non-critical CSS
+      function loadNonCriticalCSS() {
+        // Create link for global CSS
+        const globalCSS = document.createElement('link');
+        globalCSS.rel = 'stylesheet';
+        globalCSS.href = '/styles/global.css';
+        
+        // Create link for route-specific CSS if needed
+        let routeCSS;
+        if (window.location.pathname === '/test-route') {
+          routeCSS = document.createElement('link');
+          routeCSS.rel = 'stylesheet';
+          routeCSS.href = '/_astro/test-route.eN7bEBoq.css';
+        }
+        
+        // Load CSS after the page has loaded
+        window.addEventListener('load', function() {
+          document.head.appendChild(globalCSS);
+          if (routeCSS) document.head.appendChild(routeCSS);
+        });
+      }
+      
+      // Start loading non-critical CSS after the page is interactive
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadNonCriticalCSS);
+      } else {
+        loadNonCriticalCSS();
+      }
+    </script>
+    
     <noscript>
       <link rel="stylesheet" href="/styles/global.css" />
+      <link rel="stylesheet" href="/_astro/test-route.eN7bEBoq.css" />
     </noscript>
     
     <!-- FontAwesome component will be loaded here -->
@@ -434,49 +461,10 @@ const preloadFonts = [
         }
       }
     </style>
-    <!-- Load non-critical CSS with low priority -->
+    <!-- Critical JavaScript for non-critical CSS loading -->
     <script>
-      /* Load non-critical CSS without blocking render */
-      function loadCSS(href, before, media) {
-        var ss = window.document.createElement('link');
-        var ref = before || window.document.getElementsByTagName('script')[0];
-        ss.rel = 'stylesheet';
-        ss.href = href;
-        ss.media = 'only x';
-        ref.parentNode.insertBefore(ss, ref);
-        setTimeout(function() {
-          ss.media = media || 'all';
-        });
-        return ss;
-      }
-      
-      // Load non-critical CSS after page load
-      if (window.requestIdleCallback) {
-        window.requestIdleCallback(function() {
-          // Only load global.css if not already loaded
-          if (!document.querySelector('link[href$="global.css"]')) {
-            loadCSS('/styles/global.css');
-          }
-          
-          // Load route-specific CSS if it exists
-          const routeCss = window.location.pathname === '/test-route' ? '/_astro/test-route.eN7bEBoq.css' : '';
-          if (routeCss) {
-            loadCSS(routeCss);
-          }
-        });
-      } else {
-        // Fallback for browsers that don't support requestIdleCallback
-        window.addEventListener('load', function() {
-          if (!document.querySelector('link[href$="global.css"]')) {
-            loadCSS('/styles/global.css');
-          }
-          
-          const routeCss = window.location.pathname === '/test-route' ? '/_astro/test-route.eN7bEBoq.css' : '';
-          if (routeCss) {
-            loadCSS(routeCss);
-          }
-        });
-      }
+      // This script is intentionally empty as we've moved the CSS loading logic above
+      // to ensure it runs as early as possible in the document parsing
     </script>
   </head>
 
