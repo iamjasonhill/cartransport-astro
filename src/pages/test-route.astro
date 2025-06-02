@@ -11,7 +11,7 @@ export const getStaticPaths = () => {
   return []; // Disable dynamic route generation for this page
 };
 
-// Add critical styles for this route
+// Define critical styles as a JavaScript string
 const criticalStyles = `
   /* Test route specific styles */
   .test-route {
@@ -108,7 +108,7 @@ try {
 
 <BaseLayout title="Test Route" description="Test route for debugging">
   <div class="container mx-auto px-4 py-8 test-route">
-    <style>{criticalStyles}</style>
+    <style is:inline>{criticalStyles}</style>
     <h1>Test Route</h1>
     
     {error ? (
