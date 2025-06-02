@@ -251,20 +251,66 @@ const preloadFonts = [
           </nav>
           
           <!-- Mobile menu button -->
-          <button id="mobile-menu-button" class="md:hidden flex items-center text-white">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+          <button 
+            id="mobile-menu-button" 
+            class="md:hidden flex items-center text-white p-2"
+            aria-label="Toggle menu"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+            aria-haspopup="true"
+          >
+            <span class="sr-only">Open main menu</span>
+            <svg 
+              class="w-6 h-6" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path 
+                stroke-linecap="round" 
+                stroke-linejoin="round" 
+                stroke-width="2" 
+                d="M4 6h16M4 12h16m-7 6h7"
+              ></path>
             </svg>
           </button>
         </div>
       </div>
       
       <!-- Mobile Navigation -->
-      <div id="mobile-menu" class="md:hidden bg-[#101827] text-white shadow-lg absolute w-full z-10 hidden">
+      <div 
+        id="mobile-menu" 
+        class="md:hidden bg-[#101827] text-white shadow-lg absolute w-full z-10 hidden"
+        role="menu"
+        aria-labelledby="mobile-menu-button"
+        aria-orientation="vertical"
+      >
         <div class="px-4 py-2 space-y-1">
-            <a href="/" class="block py-2 hover:bg-gray-700 px-2 rounded">Home</a>
-            <a href="https://movingagain.com.au/contact-moving-again/" class="block py-2 hover:bg-gray-700 px-2 rounded">Contact Us</a>
-            <a href="https://vehicles.movingagain.com.au/quote/multi-step?mtm_campaign=Standard_Vehicle_Quote&mtm_kwd=MACT" class="block bg-blue-600 hover:bg-blue-700 text-white text-center py-3 rounded-md font-bold mt-2 shadow-lg hover:shadow-xl">Get a Quote</a>
+            <a 
+              href="/" 
+              class="block py-2 hover:bg-gray-700 px-2 rounded"
+              role="menuitem"
+              tabindex="-1"
+            >
+              Home
+            </a>
+            <a 
+              href="https://movingagain.com.au/contact-moving-again/" 
+              class="block py-2 hover:bg-gray-700 px-2 rounded"
+              role="menuitem"
+              tabindex="-1"
+            >
+              Contact Us
+            </a>
+            <a 
+              href="https://vehicles.movingagain.com.au/quote/multi-step?mtm_campaign=Standard_Vehicle_Quote&mtm_kwd=MACT" 
+              class="block bg-blue-600 hover:bg-blue-700 text-white text-center py-3 rounded-md font-bold mt-2 shadow-lg hover:shadow-xl"
+              role="menuitem"
+              tabindex="-1"
+            >
+              Get a Quote
+            </a>
         </div>
       </div>
     </header>
