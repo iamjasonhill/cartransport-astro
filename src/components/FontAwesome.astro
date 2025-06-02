@@ -3,13 +3,15 @@
 // Custom Font Awesome implementation with only the icons we need
 
 // Import the custom CSS
-import '../../styles/font-awesome.css';
+import '../styles/font-awesome.css';
 
 // Self-hosted Font Awesome font files
 const fontFiles = {
   solid: '/fonts/fa-solid-900.woff2',
   brands: '/fonts/fa-brands-400.woff2'
 };
+
+// In Vercel, the public directory is served from the root
 ---
 
 <!-- Load only the Font Awesome font files we need -->
