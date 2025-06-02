@@ -33,7 +33,11 @@ const routesCSS = '/styles/routes.css';
     <meta property="og:url" content={new URL(Astro.url.pathname, 'https://cartransport.movingagain.com.au').toString()} />
     <meta property="og:title" content={`${title} | Moving Again Car Transport`} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="https://cartransport.movingagain.com.au/images/og-image.jpg" />
+    <meta property="og:image" content="https://cartransport.movingagain.com.au/images/optimized/og-image-1200w.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <link rel="preload" as="image" href="/images/optimized/og-image-1200w.jpg" imagesrcset="/images/optimized/og-image-1200w.jpg 1x, /images/optimized/og-image-1200w.jpg 2x" />
     <meta property="og:site_name" content="Moving Again Car Transport" />
     <meta property="og:locale" content="en_AU" />
     
@@ -42,7 +46,11 @@ const routesCSS = '/styles/routes.css';
     <meta name="twitter:url" content={new URL(Astro.url.pathname, 'https://cartransport.movingagain.com.au').toString()} />
     <meta name="twitter:title" content={`${title} | Moving Again Car Transport`} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://cartransport.movingagain.com.au/images/twitter-card.jpg" />
+    <meta name="twitter:image" content="https://cartransport.movingagain.com.au/images/optimized/twitter-card-1200w.jpg" />
+    <meta name="twitter:image:width" content="1200" />
+    <meta name="twitter:image:height" content="628" />
+    <meta name="twitter:image:alt" content="Moving Again Car Transport - Professional Vehicle Transportation Services" />
+    <link rel="preload" as="image" href="/images/optimized/twitter-card-1200w.jpg" imagesrcset="/images/optimized/twitter-card-1200w.jpg 1x, /images/optimized/twitter-card-1200w.jpg 2x" />
     
     <!-- Additional Meta Tags -->
     <meta name="robots" content="index, follow" />
@@ -73,23 +81,33 @@ const routesCSS = '/styles/routes.css';
     <NonCriticalCSS href={globalCSS} />
     <NonCriticalCSS href={routesCSS} />
     
-    <!-- Preconnect to external domains -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!-- Preconnect to external domains for any remaining external resources -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
-    <!-- Preload critical fonts -->
-    <link 
-      href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" 
-      rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link 
-        href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" 
-        rel="stylesheet"
-      />
-    </noscript>
+    <!-- Self-hosted Arvo font with font-display: swap -->
+    <style>
+      @font-face {
+        font-family: 'Arvo';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: local('Arvo'),
+             url('/fonts/arvo-v22-latin-regular.woff2') format('woff2'),
+             url('/fonts/arvo-v22-latin-regular.woff') format('woff');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      
+      @font-face {
+        font-family: 'Arvo';
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: local('Arvo Bold'),
+             url('/fonts/arvo-v22-latin-700.woff2') format('woff2'),
+             url('/fonts/arvo-v22-latin-700.woff') format('woff');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+    </style>
     
     <!-- Schema.org structured data -->
     <script type="application/ld+json">
@@ -155,12 +173,6 @@ const routesCSS = '/styles/routes.css';
   </head>
 
   <body class="min-h-screen flex flex-col font-['Arvo',serif] text-gray-800 bg-gray-100">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     
     <style>
