@@ -4,14 +4,6 @@
 
 // Import the custom CSS
 import '../styles/font-awesome.css';
-
-// Self-hosted Font Awesome font files
-const fontFiles = {
-  solid: '/fonts/fa-solid-900.woff2',
-  brands: '/fonts/fa-brands-400.woff2'
-};
-
-// In Vercel, the public directory is served from the root
 ---
 
 <!-- Load only the Font Awesome font files we need -->
@@ -21,7 +13,7 @@ const fontFiles = {
     font-style: normal;
     font-weight: 900;
     font-display: block;
-    src: url(${fontFiles.solid}) format('woff2');
+    src: url('/fonts/fa-solid-900.woff2') format('woff2');
   }
 
   @font-face {
@@ -29,7 +21,7 @@ const fontFiles = {
     font-style: normal;
     font-weight: 400;
     font-display: block;
-    src: url(${fontFiles.brands}) format('woff2');
+    src: url('/fonts/fa-brands-400.woff2') format('woff2');
   }
 
   /* Base styles for all icons */
@@ -65,8 +57,8 @@ const fontFiles = {
 </style>
 
 <!-- Preload font files -->
-<link rel="preload" href={fontFiles.solid} as="font" type="font/woff2" crossorigin="anonymous" />
-<link rel="preload" href={fontFiles.brands} as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
 
 <!-- Load the actual font files -->
 <script is:inline>
