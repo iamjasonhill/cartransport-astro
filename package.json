@@ -10,7 +10,9 @@
     "migrate": "node scripts/migrate-pages.js",
     "test-route": "node scripts/test-route.js",
     "enhance-content": "node scripts/enhance-content.js",
-    "enhance": "node scripts/enhance-content-api.js"
+    "enhance": "node scripts/enhance-content-api.js",
+    "download-fonts": "node scripts/download-fonts.js",
+    "prepare": "npm run download-fonts"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -30,6 +32,7 @@
     "typescript": "^5.8.3"
   },
   "devDependencies": {
-    "@astrojs/tailwind": "^6.0.2"
+    "@astrojs/tailwind": "^6.0.2",
+    "node-fetch": "^3.3.2"
   }
 }
