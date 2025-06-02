@@ -2,21 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom styles */
-:root {
-  scroll-behavior: smooth;
-}
-
-body {
-  @apply bg-gray-50 text-gray-800;
-}
-
-/* Smooth scrolling for anchor links */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Custom utility classes */
+/* Non-critical styles */
 .btn {
   @apply inline-block px-6 py-3 rounded-md font-medium transition-all duration-200;
 }
@@ -25,7 +11,12 @@ html {
   @apply bg-blue-600 text-white hover:bg-blue-700;
 }
 
-/* Accessibility focus styles */
+/* Accessibility focus styles (non-critical) */
 *:focus-visible {
   @apply outline-2 outline-offset-2 outline-blue-600;
+}
+
+/* Additional non-critical styles */
+body {
+  @apply bg-gray-50 text-gray-800;
 }

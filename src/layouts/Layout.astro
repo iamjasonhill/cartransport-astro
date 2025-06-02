@@ -1,6 +1,8 @@
 ---
 // src/layouts/Layout.astro
 import ContactInfo from '../components/ContactInfo.astro';
+import CriticalCSS from '../components/CriticalCSS.astro';
+import NonCriticalCSS from '../components/NonCriticalCSS.astro';
 
 interface Props {
   title: string;
@@ -8,6 +10,10 @@ interface Props {
 }
 
 const { title, description = 'Professional car transport services across Australia' } = Astro.props;
+
+// Generate paths to CSS files
+const globalCSS = '/styles/global.css';
+const routesCSS = '/styles/routes.css';
 ---
 
 <!DOCTYPE html>
@@ -47,8 +53,19 @@ const { title, description = 'Professional car transport services across Austral
     <link rel="icon" type="image/png" href="/favicon.ico" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     
+    <!-- Critical CSS (inlined) -->
+    <CriticalCSS />
+    
     <!-- Preload critical assets -->
     <link rel="preload" href="/images/logo.png" as="image" />
+    
+    <!-- Preload non-critical CSS -->
+    <link rel="preload" href={globalCSS} as="style" />
+    <link rel="preload" href={routesCSS} as="style" />
+    
+    <!-- Load non-critical CSS asynchronously -->
+    <NonCriticalCSS href={globalCSS} />
+    <NonCriticalCSS href={routesCSS} />
     
     <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
