@@ -1,0 +1,241 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Section from '../components/Section.astro';
+
+const title = 'Australia\'s Trusted Car Transport Specialists';
+const description = 'Safe, reliable, and affordable car transport services across Australia. Get a free quote today!';
+---
+
+<Layout {title} {description}>
+  <!-- Hero Section -->
+  <Section name="Hero" class="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20 md:py-32 overflow-hidden">
+    <div class="absolute inset-0 bg-[url('/images/hero-placeholder.svg')] bg-cover bg-center opacity-20"></div>
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+          Professional Car Transport Services Across Australia
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 text-blue-100 max-w-2xl mx-auto">
+          Safe, reliable, and affordable vehicle transportation with door-to-door service.
+        </p>
+        <div class="flex justify-center">
+          <a 
+            href="/get-quote" 
+            class="bg-white text-blue-700 hover:bg-blue-50 px-8 py-4 rounded-md font-bold text-lg transition-colors"
+          >
+            Get a Free Quote
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <Section name="Features" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Why Choose Moving Again?</h2>
+        <div class="w-24 h-1 bg-blue-600 mx-auto"></div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4 mx-auto">
+            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-2 text-center">Fully Insured</h3>
+          <p class="text-gray-600 text-center">
+            Comprehensive insurance coverage for complete peace of mind during transport.
+          </p>
+        </div>
+        
+        <!-- Feature 2 -->
+        <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4 mx-auto">
+            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-2 text-center">On Time, Every Time</h3>
+          <p class="text-gray-600 text-center">
+            We understand the importance of punctuality when it comes to your vehicle's delivery.
+          </p>
+        </div>
+        
+        <!-- Feature 3 -->
+        <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4 mx-auto">
+            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-2 text-center">No Hidden Fees</h3>
+          <p class="text-gray-600 text-center">
+            Transparent pricing with no surprises. The price you're quoted is the price you pay.
+          </p>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Popular Routes -->
+  <Section name="Popular Routes" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Popular Transport Routes</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          We provide reliable car transport services between all major Australian cities and regional areas.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Route 1 -->
+        <a href="/sydney-to-melbourne" class="group block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+          <div class="h-48 bg-gray-200 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+            <div class="w-full h-full bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center text-white text-lg font-medium">
+              Sydney to Melbourne
+            </div>
+            <h3 class="absolute bottom-0 left-0 right-0 text-white text-xl font-bold p-4 z-20">
+              Sydney to Melbourne
+            </h3>
+          </div>
+          <div class="p-4">
+            <p class="text-gray-600">From $599</p>
+            <div class="flex items-center text-blue-600 mt-2">
+              <span>View Details</span>
+              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+        </a>
+        
+        <!-- Route 2 -->
+        <a href="/brisbane-to-sydney" class="group block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+          <div class="h-48 bg-gray-200 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+            <div class="w-full h-full bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center text-white text-lg font-medium">
+              Brisbane to Sydney
+            </div>
+            <h3 class="absolute bottom-0 left-0 right-0 text-white text-xl font-bold p-4 z-20">
+              Brisbane to Sydney
+            </h3>
+          </div>
+          <div class="p-4">
+            <p class="text-gray-600">From $699</p>
+            <div class="flex items-center text-blue-600 mt-2">
+              <span>View Details</span>
+              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+        </a>
+        
+        <!-- Route 3 -->
+        <a href="/canberra-to-melbourne" class="group block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+          <div class="h-48 bg-gray-200 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+            <div class="w-full h-full bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center text-white text-lg font-medium">
+              Canberra to Melbourne
+            </div>
+            <h3 class="absolute bottom-0 left-0 right-0 text-white text-xl font-bold p-4 z-20">
+              Canberra to Melbourne
+            </h3>
+          </div>
+          <div class="p-4">
+            <p class="text-gray-600">From $499</p>
+            <div class="flex items-center text-blue-600 mt-2">
+              <span>View Details</span>
+              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+        </a>
+      </div>
+      
+      <div class="text-center mt-10">
+        <a href="/areas" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-md transition-colors">
+          View All Routes
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <Section name="How It Works" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
+        <div class="w-24 h-1 bg-blue-600 mx-auto"></div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <!-- Step 1 -->
+        <div class="text-center">
+          <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 relative">
+            <span class="text-3xl font-bold text-blue-600">1</span>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Get a Free Quote</h3>
+          <p class="text-gray-600">
+            Fill out our simple online form or call us for an instant quote.
+          </p>
+        </div>
+        
+        <!-- Step 2 -->
+        <div class="text-center">
+          <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 relative">
+            <span class="text-3xl font-bold text-blue-600">2</span>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Book Your Transport</h3>
+          <p class="text-gray-600">
+            Choose your preferred date and confirm your booking with a small deposit.
+          </p>
+        </div>
+        
+        <!-- Step 3 -->
+        <div class="text-center">
+          <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 relative">
+            <span class="text-3xl font-bold text-blue-600">3</span>
+          </div>
+          <h3 class="text-xl font-bold mb-2">We Deliver</h3>
+          <p class="text-gray-600">
+            We collect and deliver your vehicle safely to its destination.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <Section name="Call to Action" class="py-16 bg-blue-700 text-white">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Move Your Vehicle?</h2>
+      <p class="text-xl mb-8 max-w-2xl mx-auto text-blue-100">
+        Get a free, no-obligation quote today and experience the Moving Again difference.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a 
+          href="/get-quote" 
+          class="bg-white text-blue-700 hover:bg-blue-50 px-8 py-4 rounded-md font-bold text-lg transition-colors"
+        >
+          Get a Free Quote
+        </a>
+        <a 
+          href="tel:1300123456" 
+          class="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-4 rounded-md font-bold text-lg transition-colors flex items-center justify-center gap-2"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+          </svg>
+          Call Now: 1300 123 456
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

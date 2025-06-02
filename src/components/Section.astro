@@ -1,0 +1,26 @@
+---
+interface Props {
+  name: string;
+  class?: string;
+  id?: string;
+  [key: string]: any;
+}
+
+const { name, class: className = '', id, ...rest } = Astro.props;
+const isDev = import.meta.env.DEV;
+---
+
+<section 
+  class:list={[className, 'relative']}
+  id={id}
+  data-section={name}
+  {...rest}
+>
+  <slot />
+  
+  {isDev && (
+    <div class="absolute top-0 right-0 bg-blue-600 text-white text-xs font-mono px-2 py-1 rounded-bl opacity-75 z-50 pointer-events-none">
+      {name}
+    </div>
+  )}
+</section>
