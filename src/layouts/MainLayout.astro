@@ -176,6 +176,23 @@ const preloadFonts = [
       as="style" 
       onload="this.onload=null;this.rel='stylesheet'"
     />
+    <!-- Inline critical CSS for the current route -->
+    <style is:inline>
+      /* Inline critical CSS for current route */
+      .prose {
+        color: #1f2937;
+        max-width: 65ch;
+      }
+      .prose h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 1.5em 0 0.5em;
+      }
+      .prose p {
+        margin: 1em 0;
+        line-height: 1.625;
+      }
+    </style>
     <noscript>
       <link rel="stylesheet" href="/styles/global.css" />
     </noscript>
@@ -436,16 +453,28 @@ const preloadFonts = [
       // Load non-critical CSS after page load
       if (window.requestIdleCallback) {
         window.requestIdleCallback(function() {
-          ['/styles/global.css'].forEach(function(href) {
-            loadCSS(href);
-          });
+          // Only load global.css if not already loaded
+          if (!document.querySelector('link[href$="global.css"]')) {
+            loadCSS('/styles/global.css');
+          }
+          
+          // Load route-specific CSS if it exists
+          const routeCss = window.location.pathname === '/test-route' ? '/_astro/test-route.eN7bEBoq.css' : '';
+          if (routeCss) {
+            loadCSS(routeCss);
+          }
         });
       } else {
         // Fallback for browsers that don't support requestIdleCallback
         window.addEventListener('load', function() {
-          ['/styles/global.css'].forEach(function(href) {
-            loadCSS(href);
-          });
+          if (!document.querySelector('link[href$="global.css"]')) {
+            loadCSS('/styles/global.css');
+          }
+          
+          const routeCss = window.location.pathname === '/test-route' ? '/_astro/test-route.eN7bEBoq.css' : '';
+          if (routeCss) {
+            loadCSS(routeCss);
+          }
         });
       }
     </script>
