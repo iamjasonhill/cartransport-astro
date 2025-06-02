@@ -4,5 +4,20 @@ import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind()]
+  site: 'https://moving-again-cars.vercel.app',
+  integrations: [tailwind()],
+  // Configure Vite
+  vite: {
+    build: {
+      cssMinify: true,
+      minify: 'esbuild',
+    },
+  },
+  // Configure Markdown
+  markdown: {
+    syntaxHighlight: 'shiki',
+    shikiConfig: {
+      theme: 'github-dark',
+    },
+  },
 });

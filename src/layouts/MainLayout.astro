@@ -1,11 +1,19 @@
 ---
 // src/layouts/MainLayout.astro
+import FontAwesome from '../components/FontAwesome.astro';
+
 interface Props {
   title: string;
   description?: string;
 }
 
 const { title, description = 'Professional car transport services across Australia' } = Astro.props;
+
+// Preload critical fonts
+const preloadFonts = [
+  'https://fonts.gstatic.com/s/arvo/v20/tDbD2oWUg0MKqScQ6A.woff2',
+  'https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.woff2'
+];
 ---
 
 <!DOCTYPE html>
@@ -19,6 +27,20 @@ const { title, description = 'Professional car transport services across Austral
     
     <!-- Canonical URL -->
     <link rel="canonical" href={new URL(Astro.url.pathname, 'https://cartransport.movingagain.com.au').toString()} />
+    
+    <!-- Preload critical fonts -->
+    {preloadFonts.map(font => (
+      <link 
+        rel="preload" 
+        href={font} 
+        as="font" 
+        type="font/woff2"
+        crossorigin="anonymous"
+      />
+    ))}
+    
+    <!-- FontAwesome component will be loaded here -->
+    <FontAwesome />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -48,16 +70,36 @@ const { title, description = 'Professional car transport services across Austral
     <!-- Preload critical assets -->
     <link rel="preload" href="/images/logo.png" as="image" />
     
-    <!-- Fonts -->
+    <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
     
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Load Google Fonts with font-display: swap -->
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" 
+      rel="stylesheet"
+      media="print" 
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link 
+        href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" 
+        rel="stylesheet"
+      />
+    </noscript>
     
-    <!-- Global CSS -->
-    <link rel="stylesheet" href="/styles/global.css" />
+    <!-- Critical CSS -->
+    <style is:inline>
+      /* Critical CSS rules that are needed for above-the-fold content */
+      body { font-family: 'Roboto', sans-serif; line-height: 1.6; }
+      h1, h2, h3, h4, h5, h6 { font-family: 'Arvo', serif; }
+      /* Add any other critical styles here */
+    </style>
+    
+    <!-- Defer non-critical CSS -->
+    <link rel="stylesheet" href="/styles/global.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/styles/global.css"></noscript>
     
     <!-- Schema.org structured data -->
     <script is:inline type="application/ld+json">
@@ -295,41 +337,84 @@ const { title, description = 'Professional car transport services across Austral
     </footer>
     
     <!-- Mobile menu script -->
+    <!-- Defer non-critical JavaScript -->
     <script is:inline>
-      document.addEventListener('DOMContentLoaded', () => {
+      // Check if the browser supports the features we need
+      const supportsIntersectionObserver = 'IntersectionObserver' in window;
+      const supportsRequestIdleCallback = 'requestIdleCallback' in window;
+
+      // Load non-critical JS when the page is idle
+      function loadNonCriticalJS() {
+        // This function can be used to load additional non-critical scripts
+        // Example: loadAnalytics();
+      }
+
+
+      // Mobile menu functionality - loaded immediately as it's critical for mobile UX
+      function initMobileMenu() {
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         
-        if (mobileMenuButton && mobileMenu) {
-          mobileMenuButton.addEventListener('click', () => {
-            // Toggle the menu visibility
-            mobileMenu.classList.toggle('hidden');
-            
-            // Update ARIA attributes
-            const expanded = mobileMenu.classList.contains('hidden') ? 'false' : 'true';
-            mobileMenuButton.setAttribute('aria-expanded', expanded);
-            
-            // Toggle between hamburger and close icon
-            const menuIcon = mobileMenuButton.querySelector('svg path');
-            if (menuIcon) {
-              if (expanded === 'true') {
-                menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
-              } else {
-                menuIcon.setAttribute('d', 'M4 6h16M4 12h16m-7 6h7');
-              }
-            }
-          });
-        }
+        if (!mobileMenuButton || !mobileMenu) return;
         
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-          if (mobileMenuButton && mobileMenu && 
-              !mobileMenuButton.contains(e.target) && 
-              !mobileMenu.contains(e.target)) {
-            mobileMenu.classList.add('hidden');
+        const toggleMenu = (e) => {
+          // Stop event propagation to prevent immediate document click handler from closing
+          e.stopPropagation();
+          
+          // Toggle the menu visibility
+          const isHidden = mobileMenu.classList.toggle('hidden');
+          
+          // Update ARIA attributes
+          mobileMenuButton.setAttribute('aria-expanded', !isHidden);
+          
+          // Toggle menu icon
+          const menuIcon = mobileMenuButton.querySelector('svg');
+          if (menuIcon) {
+            menuIcon.innerHTML = isHidden 
+              ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7' />'
+              : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />';
           }
+        };
+
+        // Close mobile menu when clicking outside
+        const closeOnOutsideClick = (e) => {
+          if (!mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+            mobileMenu.classList.add('hidden');
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+            const menuIcon = mobileMenuButton.querySelector('svg');
+            if (menuIcon) {
+              menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7' />';
+            }
+          }
+        };
+
+        // Event listeners
+        mobileMenuButton.addEventListener('click', toggleMenu);
+        document.addEventListener('click', closeOnOutsideClick);
+
+        // Cleanup function for Astro's view transitions
+        return () => {
+          mobileMenuButton.removeEventListener('click', toggleMenu);
+          document.removeEventListener('click', closeOnOutsideClick);
+        };
+      }
+
+      // Initialize critical functionality immediately
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initMobileMenu);
+      } else {
+        initMobileMenu();
+      }
+
+      // Load non-critical JS when the browser is idle
+      if (supportsRequestIdleCallback) {
+        requestIdleCallback(loadNonCriticalJS, { timeout: 2000 });
+      } else {
+        // Fallback for browsers that don't support requestIdleCallback
+        window.addEventListener('load', () => {
+          setTimeout(loadNonCriticalJS, 3000);
         });
-      });
+      }
     </script>
   </body>
 </html>
