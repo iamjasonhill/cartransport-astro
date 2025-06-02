@@ -91,15 +91,23 @@ export async function getStaticPaths() {
 
     await logger.log(`Successfully generated ${paths.length} paths`);
     return paths;
-  } catch (error) {
-    await logger.error('Error in getStaticPaths:', {
-      message: error.message,
-      stack: error.stack,
-      code: error.code,
-      path: error.path,
-      errno: error.errno,
-      syscall: error.syscall
-    });
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error 
+      ? error.message 
+      : 'An unknown error occurred';
+      
+    const errorDetails = error instanceof Error 
+      ? {
+          message: error.message,
+          stack: error.stack,
+          ...(error as NodeJS.ErrnoException).code && { code: (error as NodeJS.ErrnoException).code },
+          ...(error as NodeJS.ErrnoException).path && { path: (error as NodeJS.ErrnoException).path },
+          ...(error as NodeJS.ErrnoException).errno && { errno: (error as NodeJS.ErrnoException).errno },
+          ...(error as NodeJS.ErrnoException).syscall && { syscall: (error as NodeJS.ErrnoException).syscall }
+        }
+      : { message: 'Non-Error object thrown' };
+
+    await logger.error('Error in getStaticPaths:', errorDetails);
     
     // Return a default path to prevent build failures
     return [{
@@ -146,15 +154,20 @@ try {
   
   await logger.log('Successfully loaded content for route:', routeParam || 'index');
   await logger.log('Content keys:', Object.keys(content));
-} catch (err) {
-  error = `Error loading content: ${err.message}`;
-  await logger.error(error);
-  await logger.error('Error details:', { 
-    message: err.message, 
-    stack: err.stack,
-    code: err.code,
-    path: err.path
-  });
+} catch (err: unknown) {
+  if (err instanceof Error) {
+    error = `Error loading content: ${err.message}`;
+    await logger.error(error);
+    await logger.error('Error details:', { 
+      message: err.message, 
+      stack: err.stack,
+      ...(err as NodeJS.ErrnoException).code && { code: (err as NodeJS.ErrnoException).code },
+      ...(err as NodeJS.ErrnoException).path && { path: (err as NodeJS.ErrnoException).path }
+    });
+  } else {
+    error = 'An unknown error occurred while loading content';
+    await logger.error(error);
+  }
 }
 
 // Process the title to get only the part before the first divider
@@ -207,7 +220,7 @@ console.log('Debug info:', JSON.stringify(debugInfo, null, 2));
     </div>
   </Section>
 
-  <Section class="bg-white py-12">
+  <Section name="route-content" class="bg-white py-12">
     <div class="route-container">
       <article class="route-content">
         {content?.content ? (

@@ -60,7 +60,7 @@ const { title, description = 'Professional car transport services across Austral
     <link rel="stylesheet" href="/styles/global.css" />
     
     <!-- Schema.org structured data -->
-    <script type="application/ld+json">
+    <script is:inline type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "AutoTransport",
@@ -295,7 +295,7 @@ const { title, description = 'Professional car transport services across Austral
     </footer>
     
     <!-- Mobile menu script -->
-    <script>
+    <script is:inline>
       document.addEventListener('DOMContentLoaded', () => {
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
