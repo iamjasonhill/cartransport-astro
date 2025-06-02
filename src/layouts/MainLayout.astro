@@ -71,39 +71,75 @@ const preloadFonts = [
     <link rel="preload" href="/images/logo.png" as="image" />
     
     <!-- Preconnect to external domains -->
+    <!-- Preconnect to Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link 
-      href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap&subset=latin" 
-      rel="stylesheet"
-      media="print" 
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link 
-        href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap&subset=latin" 
-        rel="stylesheet"
-      />
-    </noscript>
+    
+    <!-- Load fonts with modern CSS -->
     <style>
-      /* Preload font files */
+      /* Arvo - latin */
       @font-face {
         font-family: 'Arvo';
         font-style: normal;
         font-weight: 400;
         font-display: swap;
-        src: url(https://fonts.gstatic.com/s/arvo/v20/tDbD2oWUg0MKmSAa6A.woff2) format('woff2');
+        src: url('https://fonts.gstatic.com/s/arvo/v22/tDbD2oWUg0MKmSA.ttf') format('truetype');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* Arvo - latin - bold */
+      @font-face {
+        font-family: 'Arvo';
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/arvo/v22/tDbM2oWUg0MKoZw1yLQ.ttf') format('truetype');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* Roboto - latin */
+      @font-face {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 300;
+        font-stretch: normal;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmSU5fBBc9.ttf') format('truetype');
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
       }
       @font-face {
         font-family: 'Roboto';
         font-style: normal;
         font-weight: 400;
+        font-stretch: normal;
         font-display: swap;
-        src: url(https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.woff2) format('woff2');
+        src: url('https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxP.ttf') format('truetype');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 500;
+        font-stretch: normal;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmEU9fBBc9.ttf') format('truetype');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        font-stretch: normal;
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfBBc9.ttf') format('truetype');
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
       }
     </style>
+    
+    <!-- Fallback for non-supporting browsers -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" media="print" onload="this.media='all'">
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap">
+    </noscript>
     
     <!-- Critical CSS -->
     <style is:inline>
