@@ -56,8 +56,14 @@ const routesCSS = '/styles/routes.css';
     <!-- Critical CSS (inlined) -->
     <CriticalCSS />
     
-    <!-- Preload critical assets -->
-    <link rel="preload" href="/images/logo.png" as="image" />
+    <!-- Preload optimized logo -->
+    <link 
+      rel="preload" 
+      href="/images/optimized/logo-64w.webp" 
+      as="image" 
+      type="image/webp"
+      imagesrcset="/images/optimized/logo-64w.webp 1x, /images/optimized/logo-128w.webp 2x"
+    />
     
     <!-- Preload non-critical CSS -->
     <link rel="preload" href={globalCSS} as="style" />
@@ -92,7 +98,7 @@ const routesCSS = '/styles/routes.css';
       "@type": "AutoTransport",
       "@id": "https://movingagain.com.au/#transport",
       "name": "Moving Again Car Transport",
-      "image": "https://movingagain.com.au/images/logo.png",
+      "image": "https://movingagain.com.au/images/optimized/logo-64w.png",
       "description": "Professional car transport services across Australia. Safe, reliable, and affordable vehicle transportation.",
       "url": "https://movingagain.com.au",
       "telephone": "+610721432557",
@@ -233,7 +239,25 @@ const routesCSS = '/styles/routes.css';
         <div class="flex justify-between items-center py-4">
           <!-- Logo -->
           <a href="/" class="flex items-center space-x-2">
-            <img src="/images/logo.png" alt="Moving Again" class="h-12 w-auto" width="48" height="48" />
+            <picture>
+              <source 
+                srcSet="/images/optimized/logo-64w.webp 1x, /images/optimized/logo-128w.webp 2x" 
+                type="image/webp" 
+              />
+              <source 
+                srcSet="/images/optimized/logo-64w.png 1x, /images/optimized/logo-128w.png 2x" 
+                type="image/png" 
+              />
+              <img 
+                src="/images/optimized/logo-64w.png" 
+                alt="Moving Again" 
+                class="h-12 w-auto" 
+                width="48" 
+                height="48"
+                loading="eager"
+                decoding="async"
+              />
+            </picture>
             <div>
               <div class="text-lg font-bold text-primary">Moving Again</div>
               <div class="text-sm text-gray-600">Car Transport</div>
@@ -418,12 +442,14 @@ const routesCSS = '/styles/routes.css';
           <div class="md:col-span-2">
             <div class="flex items-center space-x-2 mb-4">
               <img 
-                src="/images/logo.png" 
+                src="/images/optimized/logo-64w.png" 
+                srcSet="/images/optimized/logo-64w.png 1x, /images/optimized/logo-128w.png 2x"
                 alt="Moving Again" 
                 class="h-12 w-auto"
                 width="48"
                 height="48"
                 loading="lazy"
+                decoding="async"
               />
               <span class="text-xl font-bold font-serif">Moving Again</span>
             </div>
