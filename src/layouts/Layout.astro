@@ -1,5 +1,7 @@
 ---
 // src/layouts/Layout.astro
+import ContactInfo from '../components/ContactInfo.astro';
+
 interface Props {
   title: string;
   description?: string;
@@ -328,19 +330,8 @@ const { title, description = 'Professional car transport services across Austral
           
           <div>
             <h3 class="text-lg font-bold mb-4">Contact Us</h3>
-            <address class="not-italic text-gray-400 space-y-2">
-              <div class="flex items-start space-x-2">
-                <i class="fas fa-map-marker-alt mt-1"></i>
-                <span>3/31 Expansion Street, Molendinar QLD 4214</span>
-              </div>
-              <div class="flex items-center space-x-2">
-                <i class="fas fa-phone"></i>
-                <a href="tel:+610721432557" class="hover:text-white">07 2143 2557</a>
-              </div>
-              <div class="flex items-center space-x-2">
-                <i class="fas fa-envelope"></i>
-                <a href="mailto:info@movingagain.com.au" class="hover:text-white">info@movingagain.com.au</a>
-              </div>
+            <address class="not-italic text-gray-400">
+              <ContactInfo />
             </address>
           </div>
         </div>

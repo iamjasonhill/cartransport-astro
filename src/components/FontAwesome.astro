@@ -1,48 +1,48 @@
 ---
 // src/components/FontAwesome.astro
-// Using Font Awesome via CDN with a simple, reliable approach
-const fontAwesomeCSS = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+// Custom Font Awesome implementation with only the icons we need
+
+// Import the custom CSS
+import '../../styles/font-awesome.css';
+
+// Self-hosted Font Awesome font files
+const fontFiles = {
+  solid: '/fonts/fa-solid-900.woff2',
+  brands: '/fonts/fa-brands-400.woff2'
+};
 ---
 
-<!-- Load Font Awesome CSS -->
-<link 
-  rel="stylesheet" 
-  href={fontAwesomeCSS} 
-  integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
-  crossorigin="anonymous" 
-  referrerpolicy="no-referrer" 
-  media="print"
-  onload="this.media='all'"
-/>
-
-<!-- Fallback for non-JavaScript -->
-<noscript>
-  <link 
-    rel="stylesheet" 
-    href={fontAwesomeCSS} 
-    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
-    crossorigin="anonymous" 
-    referrerpolicy="no-referrer"
-  />
-</noscript>
-
-<!-- Preload critical font files -->
-<link 
-  rel="preload" 
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2" 
-  as="font" 
-  type="font/woff2" 
-  crossorigin="anonymous"
-/>
-<link 
-  rel="preload" 
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2" 
-  as="font" 
-  type="font/woff2" 
-  crossorigin="anonymous"
-/>
-
+<!-- Load only the Font Awesome font files we need -->
 <style is:inline>
+  @font-face {
+    font-family: 'Font Awesome 6 Free';
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url(${fontFiles.solid}) format('woff2');
+  }
+
+  @font-face {
+    font-family: 'Font Awesome 6 Brands';
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url(${fontFiles.brands}) format('woff2');
+  }
+
+  /* Base styles for all icons */
+  .fa-icon {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 1.25em;
+    text-align: center;
+  }
+
   /* Ensure icons are properly aligned */
   .fa, .fas, .far, .fal, .fab, .fa-icon {
     display: inline-block;
@@ -61,3 +61,18 @@ const fontAwesomeCSS = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.
     vertical-align: -0.125em;
   }
 </style>
+
+<!-- Preload font files -->
+<link rel="preload" href={fontFiles.solid} as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href={fontFiles.brands} as="font" type="font/woff2" crossorigin="anonymous" />
+
+<!-- Load the actual font files -->
+<script is:inline>
+  // This script ensures fonts are loaded in the background
+  if ('fonts' in document) {
+    Promise.all([
+      document.fonts.load('1em "Font Awesome 6 Free"'),
+      document.fonts.load('1em "Font Awesome 6 Brands"')
+    ]);
+  }
+</script>

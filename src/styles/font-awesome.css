@@ -1,0 +1,21 @@
+/* Custom Font Awesome CSS with only the icons we need */
+
+/* Base styles for all icons */
+.fa-icon {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+}
+
+/* Specific icon styles */
+.fa-icon.fa-map-marker-alt::before { content: "\f3c5"; }
+.fa-icon.fa-phone::before { content: "\f095"; }
+.fa-icon.fa-envelope::before { content: "\f0e0"; }
+.fa-icon.fa-home::before { content: "\f015"; }
+.fa-icon.fa-headset::before { content: "\f590"; }

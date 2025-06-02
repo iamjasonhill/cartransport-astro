@@ -1,0 +1,41 @@
+---
+// src/components/Icon.astro
+interface Props {
+  name: string;
+  type?: 'solid' | 'regular' | 'light' | 'thin' | 'duotone' | 'brands';
+  className?: string;
+}
+
+const { name, type = 'solid', className = '' } = Astro.props;
+
+// Map of icon names to their unicode values
+const iconMap: Record<string, { solid?: string; regular?: string; light?: string; thin?: string; duotone?: string; brands?: string }> = {
+  'map-marker-alt': { solid: 'f3c5' },
+  'phone': { solid: 'f095' },
+  'envelope': { solid: 'f0e0' },
+  'home': { solid: 'f015' },
+  'headset': { solid: 'f590' },
+};
+
+const icon = iconMap[name]?.[type];
+const prefix = type === 'brands' ? 'fab' : `fa${type[0]}`;
+---
+
+{icon ? (
+  <i 
+    class={`fa-icon ${prefix} fa-${name} ${className}`} 
+    aria-hidden="true"
+    style={{
+      fontFamily: "'Font Awesome 6 Free'" + (type === 'brands' ? ' Brands' : ''),
+      fontWeight: type === 'solid' || type === 'brands' ? 900 : 400,
+      fontStyle: 'normal',
+      fontVariant: 'normal',
+      lineHeight: 1,
+      textRendering: 'auto',
+      display: 'inline-block',
+      ...(type === 'duotone' ? { '--fa-primary-opacity': '1', '--fa-secondary-opacity': '0.4' } : {})
+    }}
+  >
+    {String.fromCodePoint(parseInt(icon, 16))}
+  </i>
+) : null}

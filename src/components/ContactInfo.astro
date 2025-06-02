@@ -1,0 +1,25 @@
+---
+// src/components/ContactInfo.astro
+import Icon from './Icon.astro';
+---
+
+<div class="space-y-2">
+  <div class="flex items-start space-x-2">
+    <Icon name="map-marker-alt" class="mt-0.5" />
+    <span>
+      3/31 Expansion Street, Molendinar QLD 4214
+    </span>
+  </div>
+  <div class="flex items-center space-x-2">
+    <Icon name="phone" />
+    <a href="tel:+610721432557" class="hover:text-white transition-colors">
+      07 2143 2557
+    </a>
+  </div>
+  <div class="flex items-center space-x-2">
+    <Icon name="envelope" />
+    <a href="mailto:info@movingagain.com.au" class="hover:text-white transition-colors">
+      info@movingagain.com.au
+    </a>
+  </div>
+</div>
