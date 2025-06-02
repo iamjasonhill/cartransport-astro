@@ -74,14 +74,14 @@ const preloadFonts = [
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link 
-      href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" 
+      href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" 
       rel="stylesheet"
       media="print" 
       onload="this.media='all'"
     />
     <noscript>
       <link 
-        href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" 
+        href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" 
         rel="stylesheet"
       />
     </noscript>
@@ -414,8 +414,8 @@ const preloadFonts = [
           const menuIcon = mobileMenuButton.querySelector('svg');
           if (menuIcon) {
             menuIcon.innerHTML = isHidden 
-              ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7' />'
-              : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />';
+              ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>'\
+              : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
           }
         };
 
@@ -426,7 +426,7 @@ const preloadFonts = [
             mobileMenuButton.setAttribute('aria-expanded', 'false');
             const menuIcon = mobileMenuButton.querySelector('svg');
             if (menuIcon) {
-              menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7' />';
+              menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>';
             }
           }
         };
