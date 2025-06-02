@@ -169,36 +169,15 @@ const preloadFonts = [
     <!-- Preload critical assets -->
     <link rel="preload" href="/images/logo.png" as="image" />
     
-    <!-- Load non-critical CSS asynchronously -->
-    <link 
-      rel="preload" 
-      href="/_astro/_route_.DK_t4Dnq.css" 
-      as="style" 
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <link 
-      rel="preload" 
-      href="/_astro/_route_.DSsFr9II.css" 
-      as="style" 
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
+    <!-- Preload non-critical CSS with loadCSS pattern -->
     <link 
       rel="preload" 
       href="/styles/global.css" 
       as="style" 
       onload="this.onload=null;this.rel='stylesheet'"
     />
-    <link 
-      rel="preload" 
-      href="/styles/routes/test-route.css" 
-      as="style" 
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
     <noscript>
-      <link rel="stylesheet" href="/_astro/_route_.DK_t4Dnq.css" />
-      <link rel="stylesheet" href="/_astro/_route_.DSsFr9II.css" />
       <link rel="stylesheet" href="/styles/global.css" />
-      <link rel="stylesheet" href="/styles/routes/test-route.css" />
     </noscript>
     
     <!-- FontAwesome component will be loaded here -->
@@ -457,14 +436,14 @@ const preloadFonts = [
       // Load non-critical CSS after page load
       if (window.requestIdleCallback) {
         window.requestIdleCallback(function() {
-          ['/styles/global.css', '/styles/routes/test-route.css'].forEach(function(href) {
+          ['/styles/global.css'].forEach(function(href) {
             loadCSS(href);
           });
         });
       } else {
         // Fallback for browsers that don't support requestIdleCallback
         window.addEventListener('load', function() {
-          ['/styles/global.css', '/styles/routes/test-route.css'].forEach(function(href) {
+          ['/styles/global.css'].forEach(function(href) {
             loadCSS(href);
           });
         });

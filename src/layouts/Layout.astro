@@ -13,7 +13,6 @@ const { title, description = 'Professional car transport services across Austral
 
 // Generate paths to CSS files
 const globalCSS = '/styles/global.css';
-const routesCSS = '/styles/routes.css';
 ---
 
 <!DOCTYPE html>
@@ -135,10 +134,8 @@ const routesCSS = '/styles/routes.css';
     
     <!-- Preload non-critical CSS with loadCSS pattern -->
     <link rel="preload" href={globalCSS} as="style" onload="this.onload=null;this.rel='stylesheet'" />
-    <link rel="preload" href={routesCSS} as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <noscript>
       <link rel="stylesheet" href={globalCSS} />
-      <link rel="stylesheet" href={routesCSS} />
     </noscript>
     
     <!-- Preload critical fonts -->
@@ -262,14 +259,14 @@ const routesCSS = '/styles/routes.css';
       // Load non-critical CSS after page load
       if (window.requestIdleCallback) {
         window.requestIdleCallback(function() {
-          ['/styles/global.css', '/styles/routes.css'].forEach(function(href) {
+          ['/styles/global.css'].forEach(function(href) {
             loadCSS(href);
           });
         });
       } else {
         // Fallback for browsers that don't support requestIdleCallback
         window.addEventListener('load', function() {
-          ['/styles/global.css', '/styles/routes.css'].forEach(function(href) {
+          ['/styles/global.css'].forEach(function(href) {
             loadCSS(href);
           });
         });
