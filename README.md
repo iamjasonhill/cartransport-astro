@@ -1,47 +1,65 @@
-# Astro Starter Kit: Minimal
+# Moving Again Car Transport Site
 
-```sh
-npm create astro@latest -- --template minimal
-```
+This project contains the new Astro based build of the **Moving Again** car transport website.
+It uses [Astro](https://astro.build), Tailwind CSS and a small set of helper scripts to migrate
+and enhance content from the previous site.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+## Getting Started
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+1. Install dependencies and download the required fonts:
 
-## 🚀 Project Structure
+   ```bash
+   npm install
+   ```
 
-Inside of your Astro project, you'll see the following folders and files:
+2. Start the development server:
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+   ```bash
+   npm run dev
+   ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+   The site will be available at `http://localhost:4321`.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+3. Create a production build with:
 
-Any static assets, like images, can be placed in the `public/` directory.
+   ```bash
+   npm run build
+   ```
 
-## 🧞 Commands
+4. Preview the build locally using:
 
-All commands are run from the root of the project, from a terminal:
+   ```bash
+   npm run preview
+   ```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Available Scripts
 
-## 👀 Want to learn more?
+The repository includes several utilities for working with the site content.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| Script | Description |
+| ------ | ----------- |
+| `npm run dev` | Start the Astro development server. |
+| `npm run build` | Build the site to the `dist` directory. |
+| `npm run preview` | Preview the production build locally. |
+| `npm run migrate` | Convert pages from the old PHP site into JSON route files in `src/content/routes`. |
+| `npm run test-route` | Run the migration on a single example route for quick testing. |
+| `npm run enhance-content` | Use a local [Ollama](https://ollama.ai) installation to enhance all JSON content files. |
+| `npm run enhance` | Enhance content using the Ollama HTTP API instead of the local CLI. |
+| `npm run download-fonts` | Download the webfonts used by the site. This runs automatically after `npm install`. |
+
+Additional helper scripts can be found in the `scripts/` directory, including a
+shell script for generating social images (`create-social-images.sh`).
+
+## Project Structure
+
+- `src/` – Site source files: pages, components, layouts and styles.
+- `src/content/routes/` – JSON data for each dynamic route.
+- `public/` – Static assets such as images and fonts.
+- `scripts/` – Utility scripts for content migration and enhancement.
+
+## Deployment
+
+The project includes a `vercel.json` configuration for deploying the site to
+[Vercel](https://vercel.com). A simple `vercel --prod` will build and deploy the
+site using the settings defined in that file.
+
