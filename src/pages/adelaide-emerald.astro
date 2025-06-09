@@ -1,12 +1,53 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
 
 const title = 'Vehicle Transport Interstate from Adelaide to Emerald. | Car Transport by Moving Again';
 const description = "Moving your car from Adelaide to Emerald? Let Moving Cars help you move your car. We've been transporting cars around Australia for over 15 years. Give us a call and we'll provide an instant price.";
 // ogImage, canonicalUrl, and other meta should be handled in the layout if needed
+
 ---
 
 <BaseLayout title={title} description={description}>
+  <Section name="Hero" class="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20 md:py-32 overflow-hidden">
+    <div class="absolute inset-0">
+      <img 
+        src="/images/hero-placeholder.svg" 
+        alt="" 
+        class="w-full h-full object-cover"
+        decoding="async"
+        loading="eager"
+        width="1920"
+        height="1080"
+        style="object-position: center center;"
+      />
+    </div>
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-3xl mx-auto text-center hero-content">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight" 
+            style="will-change: transform, opacity;">
+          Vehicle Transport Interstate from Adelaide to Emerald
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 text-blue-100 max-w-2xl mx-auto">
+          Safe, reliable, and affordable car transport between Adelaide and Emerald. Get a free quote today!
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a 
+            href="https://vehicles.movingagain.com.au/quote/multi-step?mtm_campaign=Standard_Vehicle_Quote&mtm_kwd=MACT" 
+            class="bg-white text-blue-700 hover:bg-blue-50 px-8 py-4 rounded-md font-bold text-lg transition-colors text-center"
+          >
+            Standard Car Transport Quote
+          </a>
+          <a 
+            href="https://vehicles.movingagain.com.au/quote-types?mtm_campaign=Non_Standard_Vehicle_Quote&mtm_kwd=MACT" 
+            class="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-4 rounded-md font-bold text-lg transition-colors text-center"
+          >
+            Non-Standard Vehicle Quote
+          </a>
+        </div>
+      </div>
+    </div>
+  </Section>
   <main class="container mx-auto px-4 py-8">
     <h1>Vehicle Transport Interstate from Adelaide to Emerald.</h1>
     <section>
@@ -21,7 +62,15 @@ const description = "Moving your car from Adelaide to Emerald? Let Moving Cars h
     <section>
       <h2>We're in Adelaide soon!</h2>
       <p>We've actually got a collection scheduled in Adelaide in the next few days. Who knows you might see one of our trucks out on the road. We're constantly visiting Adelaide to collect and drop off vehicles to customers throughout the city.</p>
-      <div class="map-placeholder" style="width:100%;height:250px;background:#eee;text-align:center;line-height:250px;">[Map: Adelaide]</div>
+      <iframe
+        width="100%"
+        height="250"
+        style="border:0"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps?q=Adelaide,+Australia&output=embed">
+      </iframe>
     </section>
     <section>
       <h2>We offer a number of different services to our customers:</h2>
@@ -60,7 +109,15 @@ const description = "Moving your car from Adelaide to Emerald? Let Moving Cars h
     <section>
       <h2>We're in Emerald soon!</h2>
       <p>We are booked in to be making a delivery to Emerald very soon. Below is where we're going, you might be lucky enough to catch our team in action!</p>
-      <div class="map-placeholder" style="width:100%;height:250px;background:#eee;text-align:center;line-height:250px;">[Map: Emerald]</div>
+      <iframe
+        width="100%"
+        height="250"
+        style="border:0"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps?q=Emerald,+Australia&output=embed">
+      </iframe>
     </section>
     <section>
       <h2>We make Moving Cars easy.</h2>
