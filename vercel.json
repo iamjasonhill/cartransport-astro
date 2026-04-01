@@ -4,6 +4,18 @@
   "framework": "astro",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/perth-to-kalgoorlie",
+      "destination": "/perth-kalgoorlie",
+      "permanent": true
+    },
+    {
+      "source": "/sydney-to-port-hedland",
+      "destination": "/sydney-port-hedland",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/_astro/(.*)",
